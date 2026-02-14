@@ -66,3 +66,4 @@ It’s basically my way of learning by building instead of only reading tutorial
 git clone <repo>
 cd <repo>
 uv run main.py <arguments>
+
