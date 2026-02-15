@@ -3,6 +3,7 @@ import argparse
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import functions
 
 def main():
     load_dotenv()

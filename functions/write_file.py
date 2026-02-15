@@ -1,19 +1,20 @@
 import os
 
-def get_file_content(working_directory, file_path):
+def write_file(working_directory, file_path, content):
     
     try:
         cd = os.path
         MAX_CHARS = 10000
 
-
         working_dir_abs = cd.abspath(working_directory)
+
         target_file = cd.normpath(cd.join(working_dir_abs, file_path))
+       
         
     except (NotADirectoryError) as e:
         print(f"Error reading directory: {e}")
         return f"Error reading directory: {e}"
-    print(target_file)
+    
     if not cd.isfile(target_file):
         print(f'Error: File not found or is not a regular file: "{file_path}"')
         return f'Error: File not found or is not a regular file: "{file_path}"'
@@ -23,19 +24,18 @@ def get_file_content(working_directory, file_path):
     if not valid_target_file:
         print(f'Error: Cannot list "{file_path}" as it is outside the permitted working directory')
         return f'Error: Cannot list "{file_path}" as it is outside the permitted working directory'
-
-    try:
-        with open(target_file, "r") as f:
-            content = f.read(MAX_CHARS)
-            if f.read(MAX_CHARS + 1):
-                content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
-
-        print(content)
-
-
-        return content
     
-    except (FileNotFoundError, PermissionError, NotADirectoryError) as e:
-        print(f"Error reading file: {e}")
-        return f"Error reading file: {e}"
+    parent_dir = os.path.dirname(target_file)
 
+    os.makedirs(parent_dir, exist_ok=True)
+
+    try:    
+        with open(target_file, "w") as f:
+            content = f.write(content)
+            print(f'Successfully wrote to "{file_path}" ({content} characters written)')
+            return content
+    except (FileNotFoundError, PermissionError, NotADirectoryError) as e:
+        print(f"Error writting file: {e}")
+        return f"Error writting file: {e}"
+    
+    
