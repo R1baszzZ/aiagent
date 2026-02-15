@@ -1,10 +1,10 @@
 import os
 
 def write_file(working_directory, file_path, content):
+    # validation start -----------------------------------------------------------
     
     try:
         cd = os.path
-        MAX_CHARS = 10000
 
         working_dir_abs = cd.abspath(working_directory)
 
@@ -24,7 +24,9 @@ def write_file(working_directory, file_path, content):
     if not valid_target_file:
         print(f'Error: Cannot list "{file_path}" as it is outside the permitted working directory')
         return f'Error: Cannot list "{file_path}" as it is outside the permitted working directory'
-    
+    # validation end -------------------------------------------------------------
+
+
     parent_dir = os.path.dirname(target_file)
 
     os.makedirs(parent_dir, exist_ok=True)

@@ -1,6 +1,8 @@
 import os
 
 def get_files_info(working_directory, directory="."):
+    # validation start -----------------------------------------------------------
+    
     cd = os.path
 
     working_dir_abs = cd.abspath(working_directory)
@@ -15,12 +17,12 @@ def get_files_info(working_directory, directory="."):
         print(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
         return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
 
-
     try:
         files_dir = os.listdir(target_dir)
     except (FileNotFoundError, PermissionError, NotADirectoryError) as e:
         print(f"Error reading directory: {e}")
         return f"Error reading directory: {e}"
+    # validation end -------------------------------------------------------------
     
     if directory == '.':
         directory = 'current'
